@@ -15,7 +15,6 @@ export type Guest = {
 export type RsvpInput = {
   name: string
   attending: boolean
-  guestCount: number
   message: string
 }
 
@@ -30,7 +29,7 @@ export async function submitRsvp(input: RsvpInput) {
   const { error } = await supabase.from("guests").insert({
     name: input.name.trim(),
     status: input.attending ? "Présent(e)" : "Absent(e)",
-    guest_count: input.attending ? Math.min(Math.max(input.guestCount, 1), 15) : 1,
+    guest_count: 1,
     message: input.message.trim() || null,
   })
 

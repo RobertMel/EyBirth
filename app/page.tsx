@@ -24,7 +24,6 @@ function Confetti() { return <div className="pointer-events-none fixed inset-0 z
 function RsvpForm() {
   const [name, setName] = useState("")
   const [attending, setAttending] = useState(true)
-  const [guestCount, setGuestCount] = useState(1)
   const [message, setMessage] = useState("")
   const [submitted, setSubmitted] = useState(false)
   const [submitting, setSubmitting] = useState(false)
@@ -35,7 +34,7 @@ function RsvpForm() {
     if (!name.trim() || submitting) return
     setSubmitting(true)
     setError(null)
-    const result = await submitRsvp({ name, attending, guestCount, message })
+    const result = await submitRsvp({ name, attending, message })
     setSubmitting(false)
     if (!result.ok) { setError(result.error); return }
     setSubmitted(true)
@@ -50,7 +49,6 @@ function RsvpForm() {
       <button type="button" onClick={() => setAttending(true)} aria-pressed={attending} className={`rounded-xl border px-2 py-3 text-xs transition ${attending ? "border-[#9dad96] bg-[#a8b7a0] text-white" : "border-[#d9cdb8] bg-[#fffaf1] text-[#7f8579]"}`}>Je serai présent(e)</button>
       <button type="button" onClick={() => setAttending(false)} aria-pressed={!attending} className={`rounded-xl border px-2 py-3 text-xs transition ${!attending ? "border-[#c99d87] bg-[#c99d87] text-white" : "border-[#d9cdb8] bg-[#fffaf1] text-[#7f8579]"}`}>Je ne pourrai pas venir</button>
     </div>
-    {attending && <label className="mt-4 block text-xs font-medium text-[#687166]">Nombre de personnes (vous inclus(e))<input type="number" min={1} max={15} value={guestCount} onChange={(e) => setGuestCount(Number(e.target.value) || 1)} className="mt-2 w-full rounded-xl border border-[#d9cdb8] bg-[#fffaf1] px-4 py-3 text-sm text-[#536755] outline-none focus:border-[#9dad96] focus:ring-2 focus:ring-[#a8b7a0]/30" /></label>}
     <label className="mt-4 block text-xs font-medium text-[#687166]">Un petit mot (facultatif)<textarea value={message} onChange={(e) => setMessage(e.target.value)} rows={3} className="mt-2 w-full rounded-xl border border-[#d9cdb8] bg-[#fffaf1] px-4 py-3 text-sm text-[#536755] outline-none focus:border-[#9dad96] focus:ring-2 focus:ring-[#a8b7a0]/30" /></label>
     {error && <p className="mt-3 text-xs text-[#b0694f]">{error}</p>}
     <button disabled={submitting} className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-[#596d5b] py-3.5 text-sm font-medium text-white shadow-[0_8px_20px_rgba(73,92,75,0.18)] transition hover:bg-[#4c604e] disabled:opacity-60">{submitting ? "Envoi..." : "Confirmer ma réponse"} <ChevronRight size={16} /></button>
