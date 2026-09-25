@@ -114,7 +114,7 @@ export default function Page() {
   const [admin, setAdmin] = useState(false)
   const [nameBurst, setNameBurst] = useState(0)
   useEffect(() => {
-    const timer = window.setInterval(() => setNameBurst((n) => n + 1), 4200)
+    const timer = window.setInterval(() => setNameBurst((n) => n + 1), 1000)
     return () => window.clearInterval(timer)
   }, [])
   const openInvitation = () => { setOpened(true); window.setTimeout(() => setSplash(false), 850) }
