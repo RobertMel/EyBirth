@@ -216,3 +216,24 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Carte d'invitation : l'image de cadre est affichée entière, à ses proportions
+   d'origine (1024x1536). Toutes les tailles internes sont en cqw (% de la largeur
+   de la carte), donc le contenu reste calé dans la zone libre du cadre quelle
+   que soit la taille d'écran. */
+.invite-card { aspect-ratio: 1024 / 1536; container-type: inline-size; background: #fdf9ee; }
+.invite-content { height: 100%; padding-top: 3.2cqw; }
+.inv-gift { width: 7cqw; height: 7cqw; }
+.inv-gift-icon { width: 3.6cqw; height: 3.6cqw; }
+.inv-tagline { margin-top: 2.6cqw; max-width: 57cqw; font-size: 2.6cqw; line-height: 1.5; letter-spacing: 0.15em; }
+.inv-name { margin-top: 1.2cqw; font-size: 12.5cqw; line-height: 1.05; letter-spacing: -0.01em; }
+.inv-photo { margin-top: 1cqw; width: 42cqw; }
+.inv-age { margin-top: 0.6cqw; font-size: 5.5cqw; line-height: 1.1; }
+.inv-subtitle { margin-top: 1.2cqw; max-width: 56cqw; font-size: 3cqw; line-height: 1.45; }
+.inv-info { margin-top: 1.8cqw; width: 58cqw; font-size: 2.8cqw; line-height: 1.3; }
+.inv-info > div { gap: 1cqw; padding: 0 1.2cqw; }
+.inv-info-icon { width: 3.2cqw; height: 3.2cqw; color: #536755; }
+.inv-dress { margin-top: 2cqw; gap: 1.8cqw; padding: 1cqw 2.4cqw; font-size: 2.4cqw; letter-spacing: 0.02em; }
+.inv-dress > span { gap: 1cqw; }
+.inv-dot { display: inline-block; width: 2.2cqw; height: 2.2cqw; }
+.inv-signature { position: absolute; left: 0; right: 0; top: 128cqw; font-size: 3.4cqw; line-height: 1.2; }
