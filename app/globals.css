@@ -188,26 +188,6 @@
   .name-idle { animation: none; }
 }
 
-/* Jaillissement automatique et répété des animaux autour du prénom,
-   en plus du balancement continu (aucune interaction requise). */
-.name-burst-emoji {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  font-size: 1.3rem;
-  transform: translate(-50%, -50%) rotate(calc(var(--i) * 60deg)) translateY(0) scale(0.4);
-  opacity: 0;
-  animation: name-burst-out 900ms ease-out forwards;
-}
-@keyframes name-burst-out {
-  0% { transform: translate(-50%, -50%) rotate(calc(var(--i) * 60deg)) translateY(0) scale(0.4); opacity: 0; }
-  20% { opacity: 1; }
-  100% { transform: translate(-50%, -50%) rotate(calc(var(--i) * 60deg)) translateY(-50px) scale(1); opacity: 0; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .name-burst-emoji { animation: none; opacity: 0; }
-}
-
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -229,7 +209,7 @@
 .inv-name { margin-top: 1.2cqw; font-size: 12.5cqw; line-height: 1.05; letter-spacing: -0.01em; }
 .inv-photo { margin-top: 1cqw; width: 42cqw; }
 .inv-age { margin-top: 0.6cqw; font-size: 5.5cqw; line-height: 1.1; }
-.inv-subtitle { margin-top: 1.2cqw; max-width: 56cqw; font-size: 3cqw; line-height: 1.45; }
+.inv-subtitle { margin-top: 1.2cqw; max-width: 56cqw; font-size: 2.6cqw; line-height: 1.5; }
 .inv-info { margin-top: 1.8cqw; width: 58cqw; font-size: 2.8cqw; line-height: 1.3; }
 .inv-info > div { gap: 1cqw; padding: 0 1.2cqw; }
 .inv-info-icon { width: 3.2cqw; height: 3.2cqw; color: #536755; }

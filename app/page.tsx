@@ -111,11 +111,6 @@ export default function Page() {
   const [splash, setSplash] = useState(true)
   const [opened, setOpened] = useState(false)
   const [admin, setAdmin] = useState(false)
-  const [nameBurst, setNameBurst] = useState(0)
-  useEffect(() => {
-    const timer = window.setInterval(() => setNameBurst((n) => n + 1), 2000)
-    return () => window.clearInterval(timer)
-  }, [])
   const openInvitation = () => { setOpened(true); window.setTimeout(() => setSplash(false), 850) }
   if (splash) return <main className="splash-screen"><div className={`text-center transition duration-700 ${opened ? "scale-110 opacity-0" : ""}`}><div className="envelope-wrap mx-auto mb-7 cursor-pointer" onClick={openInvitation} role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") openInvitation() }} aria-label="Ouvrir l'invitation"><div className="envelope"><div className="envelope-flap" /><div className="envelope-seal"><Gift size={17} /></div></div></div><p className="font-serif text-2xl italic text-[#536755] sm:text-3xl">Prêts à célébrer<br />un moment magique ?</p><p className="mt-4 text-[10px] uppercase tracking-[0.2em] text-[#536755]">Cliquez pour ouvrir</p></div>{opened && <Confetti />}</main>
   if (admin) return <Admin onBack={() => setAdmin(false)} />
@@ -128,7 +123,7 @@ export default function Page() {
         <div className="invite-content relative z-10 flex flex-col items-center text-center">
           <div className="inv-gift flex items-center justify-center rounded-full bg-[#dce5d7] text-[#788b76]"><Gift className="inv-gift-icon" strokeWidth={1.4} /></div>
           <p className="inv-tagline uppercase text-[#536755]">Une première bougie, un grand bonheur à partager...</p>
-          <h1 className="inv-name name-idle relative select-none font-serif italic text-[#536755]">Eyalane<span key={nameBurst} aria-hidden="true" className="pointer-events-none absolute inset-0">{["🦁", "🦒", "🐘", "🦓", "🦍", "🐆"].map((e, i) => <span key={i} className="name-burst-emoji" style={{ "--i": i } as any}>{e}</span>)}</span></h1>
+          <h1 className="inv-name name-idle relative select-none font-serif italic text-[#536755]">Eyalane</h1>
           <img src="/photos/eyalane-torn.png" alt="Eyalane" className="inv-photo h-auto drop-shadow-[0_10px_22px_rgba(83,103,85,0.28)]" />
           <p className="inv-age font-serif text-[#536755]">1 an</p>
           <p className="inv-subtitle text-[#6f7563]">Venez célébrer ce merveilleux moment à nos côtés et créer avec nous de précieux souvenirs ! 🥳</p>
