@@ -81,3 +81,26 @@ export async function loginAdminAndFetchGuests(password: string) {
 
   return { ok: true as const, guests: data as Guest[] }
 }
+
+// Supprime un invité de la liste (doublon, personne non invitée...).
+// Revérifie le mot de passe côté serveur à chaque appel, comme pour la lecture.
+export async function deleteGuest(password: string, id: string) {
+  const expected = process.env.ADMIN_PASSWORD
+
+  if (!expected) {
+    return { ok: false as const, error: "ADMIN_PASSWORD n'est pas configuré côté serveur." }
+  }
+  if (password !== expected) {
+    return { ok: false as const, error: "Mot de passe incorrect." }
+  }
+
+  const supabase = getSupabaseAdminClient()
+  const { error } = await supabase.from("guests").delete().eq("id", id)
+
+  if (error) {
+    console.error("deleteGuest error:", error.message)
+    return { ok: false as const, error: "Impossible de supprimer cet invité." }
+  }
+
+  return { ok: true as const }
+}

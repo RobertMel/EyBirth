@@ -1,8 +1,8 @@
 "use client"
 
 import { FormEvent, useEffect, useState } from "react"
-import { ArrowLeft, CalendarDays, Check, ChevronRight, Clock3, Gift, LockKeyhole, MapPin, X } from "lucide-react"
-import { Guest, loginAdminAndFetchGuests, submitRsvp } from "./actions"
+import { ArrowLeft, CalendarDays, Check, ChevronRight, Clock3, Gift, LockKeyhole, MapPin, Trash2, X } from "lucide-react"
+import { Guest, deleteGuest, loginAdminAndFetchGuests, submitRsvp } from "./actions"
 
 const eventDate = new Date("2026-11-21T13:00:00+01:00").getTime()
 
@@ -60,6 +60,16 @@ function Admin({ onBack }: { onBack: () => void }) {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [guests, setGuests] = useState<Guest[] | null>(null)
+  const [deletingId, setDeletingId] = useState<string | null>(null)
+
+  const remove = async (guest: Guest) => {
+    if (!window.confirm(`Supprimer la réponse de "${guest.name}" ? Cette action est définitive.`)) return
+    setDeletingId(guest.id)
+    const result = await deleteGuest(password, guest.id)
+    setDeletingId(null)
+    if (!result.ok) { window.alert(result.error); return }
+    setGuests((prev) => prev?.filter((g) => g.id !== guest.id) ?? prev)
+  }
 
   const login = async (event: FormEvent) => {
     event.preventDefault()
@@ -91,13 +101,14 @@ function Admin({ onBack }: { onBack: () => void }) {
             <div className="rounded-2xl bg-[#dbe3d5] px-4 py-3 text-center"><span className="block font-serif text-2xl">{guests.filter((g) => g.status === "Présent(e)").reduce((sum, g) => sum + g.guest_count, 0)}</span><span className="text-[9px] uppercase tracking-widest">confirmés</span></div>
           </div>
           <div className="overflow-hidden rounded-3xl border border-[#d8ccb9] bg-[#fffaf1] shadow-sm">
-            <div className="grid grid-cols-[1fr_90px_70px] border-b border-[#e8dece] px-5 py-4 text-[10px] uppercase tracking-widest text-[#9a927f]"><span>Invité</span><span>Statut</span><span>Pers.</span></div>
+            <div className="grid grid-cols-[1fr_90px_70px_36px] border-b border-[#e8dece] px-5 py-4 text-[10px] uppercase tracking-widest text-[#9a927f]"><span>Invité</span><span>Statut</span><span>Pers.</span><span /></div>
             {guests.length === 0 && <div className="px-5 py-6 text-sm text-[#9a927f]">Aucune réponse pour le moment.</div>}
             {guests.map((guest) => (
-              <div key={guest.id} className="grid grid-cols-[1fr_90px_70px] items-start border-b border-[#eee6d9] px-5 py-4 text-sm last:border-0">
+              <div key={guest.id} className="grid grid-cols-[1fr_90px_70px_36px] items-start border-b border-[#eee6d9] px-5 py-4 text-sm last:border-0">
                 <div><span className="font-medium">{guest.name}</span>{guest.message && <p className="mt-1 text-xs italic text-[#8b806e]">« {guest.message} »</p>}</div>
                 <span className={guest.status === "Présent(e)" ? "text-xs text-[#718770]" : "text-xs text-[#b07f6b]"}>{guest.status}</span>
                 <span className="text-xs text-[#687166]">{guest.status === "Présent(e)" ? guest.guest_count : "—"}</span>
+                <button onClick={() => remove(guest)} disabled={deletingId === guest.id} aria-label={`Supprimer ${guest.name}`} className="justify-self-end text-[#b0694f] transition hover:text-[#8a4e39] disabled:opacity-40"><Trash2 size={15} /></button>
               </div>
             ))}
           </div>
